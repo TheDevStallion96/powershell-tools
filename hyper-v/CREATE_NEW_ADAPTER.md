@@ -1,13 +1,25 @@
+# Create New V-Switch
 Creating virtual switches for Hyper-V using PowerShell involves using the `New-VMSwitch` cmdlet. Here's a basic example of how you can create a virtual switch using PowerShell:
 
 ```powershell
-# Define the parameters
-$switchName = "MyVirtualSwitch"
-$switchType = "External"  # You can use "Internal" or "Private" as well
-$networkAdapterName = "PhysicalNetworkAdapterName"
+# Define the function
+function New-VAdapter {
+    # Prompt user for switch name
+    $switchName = Read-Host "Enter the virtual switch name"
 
-# Create the virtual switch
-New-VMSwitch -Name $switchName -SwitchType $switchType -NetAdapterName $networkAdapterName
+    # Prompt user for switch type
+    $switchType = Read-Host "Enter the virtual switch type (External/Internal/Private)"
+
+    # Prompt user for network adapter name
+    $networkAdapterName = Read-Host "Enter the physical network adapter name"
+
+    # Create the virtual switch
+    New-VMSwitch -Name $switchName -SwitchType $switchType -NetAdapterName $networkAdapterName
+}
+
+# Set an alias for the function
+Set-Alias -Name "New-VAdapter" -Value New-VAdapter
+
 ```
 
 Explanation of parameters:
@@ -19,4 +31,4 @@ Make sure to run this script with elevated privileges, as creating virtual switc
 
 Adjust the values of `$switchName`, `$switchType`, and `$networkAdapterName` according to your specific requirements.
 
-Note: If you are creating an external switch, ensure that the physical network adapter is not already bound to another protocol or service.
+> *Note*: If you are creating an external switch, ensure that the physical network adapter is not already bound to another protocol or service.
